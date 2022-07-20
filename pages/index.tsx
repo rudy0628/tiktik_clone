@@ -4,16 +4,33 @@ import { Video } from '../type';
 
 import VideoCard from '../components/VideoCard';
 import NoResult from '../components/NoResult';
+import usePostStore from '../store/postStore';
 
 interface IProps {
 	videos: Video[];
 }
 
 const Home: NextPage<IProps> = ({ videos }) => {
+	const { isDesc } = usePostStore();
+	let sortedVideo;
+	if (isDesc) {
+		sortedVideo = videos.sort(
+			(a: Video, b: Video) =>
+				+new Date(b.date).getTime() - +new Date(a.date).getTime()
+		);
+	} else {
+		sortedVideo = videos.sort(
+			(a: Video, b: Video) =>
+				+new Date(a.date).getTime() - +new Date(b.date).getTime()
+		);
+	}
+
 	return (
 		<div className="flex flex-col gap-10 videos h-full">
 			{videos.length ? (
-				videos.map((video: Video) => <VideoCard post={video} key={video._id} />)
+				sortedVideo.map((video: Video) => (
+					<VideoCard post={video} key={video._id} />
+				))
 			) : (
 				<NoResult text={'No Videos'} />
 			)}
