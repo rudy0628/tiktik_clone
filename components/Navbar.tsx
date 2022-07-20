@@ -73,17 +73,14 @@ const Navbar = () => {
 						</Link>
 						{/* image */}
 						{userProfile.image && (
-							<Link href="/">
-								<>
-									<Image
-										width={40}
-										height={40}
-										className="rounded-full"
-										src={userProfile.image}
-										alt="profile"
-										// layout="responsive"
-									/>
-								</>
+							<Link href={`/profile/${userProfile._id}`}>
+								<Image
+									width={40}
+									height={40}
+									className="rounded-full cursor-pointer"
+									src={userProfile.image}
+									alt="profile"
+								/>
 							</Link>
 						)}
 						<button
