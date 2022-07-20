@@ -97,29 +97,10 @@ const Detail = ({ postDetails }: IProps) => {
 							className="h-full cursor-pointer"
 							ref={videoRef}
 							loop
+							controls
 							onClick={onVideoClick}
 						></video>
 					</div>
-					{/* play button */}
-					<div className="absolute top-[45%] left-[45%] cursor-pointer">
-						{!playing && (
-							<button onClick={onVideoClick}>
-								<BsFillPlayFill className="text-white text-6xl lg:text-8xl" />
-							</button>
-						)}
-					</div>
-				</div>
-
-				<div className="absolute bottom-5 lg:bottom-10 right-5 lg:right-10 cursor-pointer">
-					{isVideoMuted ? (
-						<button onClick={onVideoMuted}>
-							<HiVolumeOff className="text-white text-2xl lg:text-4xl" />
-						</button>
-					) : (
-						<button onClick={onVideoMuted}>
-							<HiVolumeUp className="text-white text-2xl lg:text-4xl" />
-						</button>
-					)}
 				</div>
 			</div>
 			{/* Comment */}
