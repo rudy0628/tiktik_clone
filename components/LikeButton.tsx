@@ -12,7 +12,7 @@ interface IProps {
 const LikeButton = ({ likes, handleLike, handleDislike }: IProps) => {
 	const [alreadyLike, setAlreadyLike] = useState(false);
 	const { userProfile }: any = useAuthStore();
-	const filterLikes = likes.filter(item => item._ref === userProfile?._id);
+	const filterLikes = likes?.filter(item => item._ref === userProfile?._id);
 
 	useEffect(() => {
 		if (filterLikes?.length > 0) {
