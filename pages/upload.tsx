@@ -63,6 +63,7 @@ const Upload = () => {
 					_ref: userProfile?._id,
 				},
 				topic,
+				date: new Date(),
 			};
 
 			await axios.post(

@@ -13,31 +13,6 @@ interface IProps {
 }
 
 const VideoCard: NextPage<IProps> = ({ post }) => {
-	const [isHover, setIsHover] = useState(false);
-	const [playing, setPlaying] = useState(false);
-	const [isVideoMuted, setIsVideoMuted] = useState(false);
-	const videoRef = useRef<HTMLVideoElement>(null);
-
-	const onVideoPres = () => {
-		if (playing) {
-			videoRef?.current?.pause();
-			setPlaying(false);
-		} else {
-			videoRef?.current?.play();
-			setPlaying(true);
-		}
-	};
-
-	const onVideoMuted = () => {
-		if (isVideoMuted) {
-			videoRef.current!.muted = false;
-			setIsVideoMuted(false);
-		} else {
-			videoRef.current!.muted = true;
-			setIsVideoMuted(true);
-		}
-	};
-
 	return (
 		<div className="flex flex-col border-b-2 border-gray-200 pb-6">
 			{/* Header */}
@@ -68,21 +43,19 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
 							</p>
 						</div>
 					</Link>
+					<p className="font-medium text-xs text-gray-500 hidden md:block">
+						{new Date(post.date).toLocaleString('zh-TW')}
+					</p>
 					<p className="mt-2 font-normal">{post.caption}</p>
 				</div>
 			</div>
 			{/* Video */}
 			<div className="lg:ml-20 flex gap-4 relative">
-				<div
-					className="rounded-3xl"
-					onMouseEnter={() => setIsHover(true)}
-					onMouseLeave={() => setIsHover(false)}
-				>
+				<div className="rounded-3xl">
 					<Link href={`/detail/${post._id}`}>
 						<video
 							className="lg:w-[600px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer bg-gray-100"
 							src={post.video.asset.url}
-							ref={videoRef}
 							controls
 						></video>
 					</Link>

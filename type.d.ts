@@ -27,6 +27,7 @@ export interface Video {
 		};
 	}[];
 	userId: string;
+	date: string;
 }
 
 export interface IUser {
