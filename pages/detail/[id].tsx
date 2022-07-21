@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useRef, FormEvent } from 'react';
+import React, { useState, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
 import { MdOutlineCancel } from 'react-icons/md';
-import { BsFillPlayFill } from 'react-icons/bs';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import axios from 'axios';
 import { Video } from '../../type';
 import useAuthStore from '../../store/authStore';
 
+import Chatroom from '../../components/Chatroom/Chatroom';
 import LikeButton from '../../components/LikeButton';
 import Comments from '../../components/Comments';
 
@@ -19,34 +18,14 @@ interface IProps {
 
 const Detail = ({ postDetails }: IProps) => {
 	const [post, setPost] = useState(postDetails);
-	const [playing, setPlaying] = useState(false);
-	const [isVideoMuted, setIsVideoMuted] = useState(false);
 	const [comment, setComment] = useState('');
+	const [chatroomIsOpen, setChatroomIsOpen] = useState(true);
 	const [isPostingComment, setIsPostingComment] = useState(false);
 
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const router = useRouter();
 	const { userProfile }: any = useAuthStore();
-
-	const onVideoClick = () => {
-		if (playing) {
-			videoRef?.current?.pause();
-			setPlaying(false);
-		} else {
-			videoRef?.current?.play();
-			setPlaying(true);
-		}
-	};
-
-	const onVideoMuted = () => {
-		if (isVideoMuted) {
-			videoRef.current!.muted = false;
-			setIsVideoMuted(false);
-		} else {
-			videoRef.current!.muted = true;
-			setIsVideoMuted(true);
-		}
-	};
+	console.log(userProfile);
 
 	const handleLike = async (like: boolean) => {
 		if (userProfile) {
@@ -82,6 +61,8 @@ const Detail = ({ postDetails }: IProps) => {
 
 	return (
 		<div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
+			{/* Chatroom */}
+			{chatroomIsOpen && <Chatroom />}
 			{/* Video container */}
 			<div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
 				<div className="absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
@@ -98,7 +79,6 @@ const Detail = ({ postDetails }: IProps) => {
 							ref={videoRef}
 							loop
 							controls
-							onClick={onVideoClick}
 						></video>
 					</div>
 				</div>
