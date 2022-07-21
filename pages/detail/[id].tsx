@@ -25,7 +25,6 @@ const Detail = ({ postDetails }: IProps) => {
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const router = useRouter();
 	const { userProfile }: any = useAuthStore();
-	console.log(userProfile);
 
 	const handleLike = async (like: boolean) => {
 		if (userProfile) {
