@@ -27,7 +27,7 @@ const Detail = ({ postDetails }: IProps) => {
 	const router = useRouter();
 	const { userProfile }: any = useAuthStore();
 	const { chatroomIsOpen, setChatroomIsOpen }: any = usePostStore();
-	const chatroomName = userProfile.email.replace('@gmail.com', '');
+	const chatroomName = String(userProfile.email).replace('@gmail.com', '');
 	const chatroomId: any = router.query.id;
 
 	const handleLike = async (like: boolean) => {
