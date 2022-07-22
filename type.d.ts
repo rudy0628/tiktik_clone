@@ -36,3 +36,14 @@ export interface IUser {
 	userName: string;
 	image: string;
 }
+
+export interface IMessage {
+	user: string;
+	text: string;
+}
+
+export interface IChatUser {
+	id: string;
+	name: string;
+	room: string;
+}

@@ -4,9 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
 import { MdOutlineCancel } from 'react-icons/md';
+import { HiOutlineStatusOnline } from 'react-icons/hi';
 import axios from 'axios';
 import { Video } from '../../type';
 import useAuthStore from '../../store/authStore';
+import usePostStore from '../../store/postStore';
 
 import Chatroom from '../../components/Chatroom/Chatroom';
 import LikeButton from '../../components/LikeButton';
@@ -19,12 +21,14 @@ interface IProps {
 const Detail = ({ postDetails }: IProps) => {
 	const [post, setPost] = useState(postDetails);
 	const [comment, setComment] = useState('');
-	const [chatroomIsOpen, setChatroomIsOpen] = useState(true);
 	const [isPostingComment, setIsPostingComment] = useState(false);
 
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const router = useRouter();
 	const { userProfile }: any = useAuthStore();
+	const { chatroomIsOpen, setChatroomIsOpen }: any = usePostStore();
+	const chatroomName = userProfile.email.replace('@gmail.com', '');
+	const chatroomId: any = router.query.id;
 
 	const handleLike = async (like: boolean) => {
 		if (userProfile) {
@@ -61,7 +65,7 @@ const Detail = ({ postDetails }: IProps) => {
 	return (
 		<div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
 			{/* Chatroom */}
-			{chatroomIsOpen && <Chatroom />}
+			{chatroomIsOpen && <Chatroom name={chatroomName} room={chatroomId} />}
 			{/* Video container */}
 			<div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blurred-img bg-no-repeat bg-cover bg-center">
 				<div className="absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
@@ -118,13 +122,21 @@ const Detail = ({ postDetails }: IProps) => {
 					{/* Caption */}
 					<p className="px-8 text-lg text-gray-600 mt-5">{post.caption}</p>
 					{/* like button */}
-					<div className="mt-10 px-10">
+					<div className="mt-10 px-10 flex gap-4 items-center">
 						{userProfile && (
 							<LikeButton
 								likes={post.likes}
 								handleLike={() => handleLike(true)}
 								handleDislike={() => handleLike(false)}
 							/>
+						)}
+						{userProfile && (
+							<button
+								className="p-2 w-10 h-10 rounded-full bg-[#f51997] flex justify-center items-center"
+								onClick={() => setChatroomIsOpen(true)}
+							>
+								<HiOutlineStatusOnline className="text-white" />
+							</button>
 						)}
 					</div>
 					{/* Comment */}
